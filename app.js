@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
 const circulationRepo = require('./repos/circulationRepo');
 const data = require('./circulation.json')
@@ -10,16 +11,18 @@ const dbName = 'circulation';
 
 async function main() {
   const client = new MongoClient(url);
-
   await client.connect();
 
   const results = await circulationRepo.loadData(data);
+  assert.equal(results.insertedCount, data.length);
+  
   const admin = client.db(dbName).admin();
-  console.log(results.insertedCount, results.ops);
-  //console.log(await admin.serverStatus());
+ 
+  await client.db(dbName).dropDatabase();
   console.log(await admin.listDatabases());
 
 
+  client.close();
 }
 
 main();

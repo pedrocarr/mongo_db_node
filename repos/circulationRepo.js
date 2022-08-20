@@ -14,7 +14,7 @@ function circulationRepo() {
         results = await db.collection("newspaper").insertMany(data);
 
         resolve(results);
-        
+        client.close();
       } catch (error) {
         reject(error);
       }
