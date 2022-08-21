@@ -13,9 +13,19 @@ async function main() {
   const client = new MongoClient(url);
   await client.connect();
 
-  const results = await circulationRepo.loadData(data);
-  assert.equal(results.insertedCount, data.length);
+  try {
+    const results = await circulationRepo.loadData(data);
+    assert.equal(results.insertedCount, data.length);
   
+    const getData = await circulationRepo.get()
+    assert.equal(data.length, getData.length);
+    
+  } catch (error) {
+    console.log(error);
+    
+  } finally {
+
+      
   const admin = client.db(dbName).admin();
  
   await client.db(dbName).dropDatabase();
@@ -23,6 +33,11 @@ async function main() {
 
 
   client.close();
+
+  }
+
+
+
 }
 
 main();
