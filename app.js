@@ -25,7 +25,6 @@ async function main() {
     
   } finally {
 
-      
   const admin = client.db(dbName).admin();
  
   await client.db(dbName).dropDatabase();
@@ -35,8 +34,6 @@ async function main() {
   client.close();
 
   }
-
-
 
 }
 

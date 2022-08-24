@@ -13,8 +13,6 @@ function circulationRepo() {
 
 
       const items = db.collection('newspapers').find();
-
-
       resolve(await items.toArray());
       client.close();
      } catch (error) {
